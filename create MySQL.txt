@@ -1,0 +1,41 @@
+CREATE DATABASE IF NOT EXISTS convindb DEFAULT CHARACTER SET utf8mb4;
+
+USE convindb;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(100) NOT NULL
+);
+
+-- username key가 중복일 경우 에러 대신 업데이트를 실행합니다.
+INSERT INTO users (username, password) VALUES ('admin', 'admin123')
+ON DUPLICATE KEY UPDATE password=VALUES(password);
+
+-- 화면 표시/추가용 데이터 테이블
+CREATE TABLE IF NOT EXISTS inventory (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  amount INT NOT NULL,
+  price INT NOT NULL,
+  Ocost INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS balance (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  bal INT NOT NULL
+);
+
+INSERT INTO inventory (name, amount, price, Ocost)
+VALUES ('참치김밥', 10, 3000, 1500),
+('햄김밥', 10, 2500, 1250),
+('치즈김밥', 10, 2800, 1400),
+('불고기김밥', 10, 3500, 1750),
+('야채김밥', 10, 2300, 1150),
+('콜라', 10, 1500, 750),
+('사이다', 10, 1500, 750),
+('오렌지주스', 10, 2000, 1000),
+('우유', 10, 1800, 900),
+('아이스티', 10, 1700, 850);
+
+INSERT INTO balance (bal) VALUES (100000);
