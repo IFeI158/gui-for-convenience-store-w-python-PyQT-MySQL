@@ -1,15 +1,18 @@
 # Convenience Store Management GUI
 
-PyQt5와 MySQL을 활용한 편의점 관리용 GUI 프로그램입니다.  
-재고 관리, 입출고 기록, 간단한 통계 기능 등을 제공합니다.
+This is a GUI program for managing convenience stores, utilizing PyQt5 and MySQL. It provides inventory management, ordering, sales, asset management, and time tracking functions.
 
-## 개발 환경
+## environment
 
 - Python 3.9 
 - PyQt5
 - MySQL 8.0 
 
-## 기능
+##  HOW TO RUN
+py -3.9 -m venv qtenv
 
-- 재고 관리 (추가, 삭제, 수정)
-- 자산 관리
+.\venv\Scripts\activate
+
+pip install PyQt5 pymysql
+
+python capp.py
