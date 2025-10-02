@@ -1,19 +1,20 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from PyQt5.QtCore import QTimer, QTime
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont,QIcon
 
 class ClockWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("시계")
+        self.setWindowIcon(QIcon("clock.png"))
 
         # 레이아웃
         layout = QVBoxLayout(self)
 
         # 시계 라벨
         self.clock_label = QLabel()
-        self.clock_label.setFont(QFont("Arial", 30, QFont.Bold))  # 글씨 크기 및 굵기 설정
+        self.clock_label.setFont(QFont("Arial", 30, QFont.Bold))
         layout.addWidget(self.clock_label)
 
         # 타이머 설정 (1초마다 시간 갱신)

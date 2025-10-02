@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QTableWidget, QTableWidgetItem, QLabel, QLineEdit, QPushButton, QMessageBox, QGridLayout, 
+    QTableWidget, QTableWidgetItem, QLabel, QLineEdit, QPushButton, QMessageBox, QGridLayout,
 )
 from PyQt5.QtGui import QFont, QIcon
 from cdb_helper import DB, DB_CONFIG
 import sys
+from clock import ClockWindow  # 시계 창 import
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -26,6 +27,8 @@ class MainWindow(QMainWindow):
         self.btn_add.clicked.connect(self.add_amount)
         self.btn_del = QPushButton("판매")
         self.btn_del.clicked.connect(self.sub_amount)
+        self.btn_time = QPushButton("시간") 
+        self.btn_time.clicked.connect(self.show_clock_window)
 
         form_box.addWidget(QLabel("상품명"))
         form_box.addWidget(self.input_name)
@@ -33,6 +36,7 @@ class MainWindow(QMainWindow):
         form_box.addWidget(self.input_amount)
         form_box.addWidget(self.btn_add)
         form_box.addWidget(self.btn_del)
+        form_box.addWidget(self.btn_time)
         vbox.addLayout(form_box)
 
         # 테이블
@@ -54,7 +58,7 @@ class MainWindow(QMainWindow):
         for i in range(1, 10):
             btn = QPushButton(str(i))
             btn.setFixedSize(40, 40)
-            font = QFont("Arial", 16, QFont.Bold)  # Bold=굵게
+            font = QFont("Arial", 16, QFont.Bold)
             btn.setFont(font)
             btn.setStyleSheet("background-color: gray; color: white;")
             btn.clicked.connect(lambda _, x=i: self.num_clicked(x))
@@ -78,6 +82,7 @@ class MainWindow(QMainWindow):
         self.load_bal()
         self.adjustSize()
 
+    # 숫자 버튼 관련
     def num_clicked(self, num):
         current = self.input_amount.text()
         self.input_amount.setText(current + str(num))
@@ -87,9 +92,10 @@ class MainWindow(QMainWindow):
         self.input_amount.setText(current[:-1])
 
     def select_name(self, row):
-        name = self.table.item(row, 1).text() 
+        name = self.table.item(row, 1).text()
         self.input_name.setText(name)
 
+    # 재고/자산 불러오기
     def load_inv(self):
         rows = self.db.fetch_inventory()
         self.table.setRowCount(len(rows))
@@ -109,10 +115,10 @@ class MainWindow(QMainWindow):
     def load_bal(self):
         bal = self.db.fetch_bal()
         self.rtable.setRowCount(1)
-        font = QFont("Arial", 20, QFont.Bold)  # 글씨 크기 20, 굵게
         self.rtable.setItem(0, 0, QTableWidgetItem(str(bal)))
         self.rtable.resizeColumnsToContents()
 
+    # 발주/판매 처리
     def add_amount(self):
         name = self.input_name.text().strip()
         amount_text = self.input_amount.text().strip()
@@ -161,4 +167,9 @@ class MainWindow(QMainWindow):
                  QMessageBox.critical(self,"오류","수량 부족")
         else:
             QMessageBox.critical(self, "실패", "판매처리 중 오류가 발생했습니다.")
+
+    # 시계 창 띄우기
+    def show_clock_window(self):
+        self.clock_window = ClockWindow()  # clock.py의 ClockWindow
+        self.clock_window.show()
 
