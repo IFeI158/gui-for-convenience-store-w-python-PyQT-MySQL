@@ -10,7 +10,7 @@ This is a GUI program for managing convenience stores, utilizing PyQt5 and MySQL
 
 ##  HOW TO RUN
 
-create MySQL.txt (run this code on MySQL to set items)
+open 'create MySQL.txt' (run this code on MySQL to set items)
 
 py -3.9 -m venv qtenv
 
