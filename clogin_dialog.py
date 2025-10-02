@@ -1,12 +1,13 @@
 # login_dialog.py
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QFormLayout, QLineEdit, QPushButton, QMessageBox
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from cdb_helper import DB, DB_CONFIG
 
 class LoginDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("로그인")
+        self.setWindowIcon(QIcon("login.png"))
         self.setFixedSize(400, 250)  # 창 크기 고정
         self.db = DB(**DB_CONFIG)
 

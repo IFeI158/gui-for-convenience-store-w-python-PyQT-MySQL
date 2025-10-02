@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTableWidget, QTableWidgetItem, QLabel, QLineEdit, QPushButton, QMessageBox, QGridLayout, 
 )
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from cdb_helper import DB, DB_CONFIG
 import sys
 
@@ -10,6 +10,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("편의점 관리")
+        self.setWindowIcon(QIcon("CU.png"))
+        self.resize(400, 300)
         self.db = DB(**DB_CONFIG)
 
         central = QWidget()
@@ -107,6 +109,7 @@ class MainWindow(QMainWindow):
     def load_bal(self):
         bal = self.db.fetch_bal()
         self.rtable.setRowCount(1)
+        font = QFont("Arial", 20, QFont.Bold)  # 글씨 크기 20, 굵게
         self.rtable.setItem(0, 0, QTableWidgetItem(str(bal)))
         self.rtable.resizeColumnsToContents()
 
